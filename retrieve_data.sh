@@ -1,0 +1,1 @@
+mkdir data && wget https://www.dropbox.com/s/bjfn9kehukpbmcm/VGG16.onnx?dl=1 -O ./data/VGG16.onnx
