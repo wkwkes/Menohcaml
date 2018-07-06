@@ -129,7 +129,6 @@ module Vpt : sig
   val get_dtype : h -> string -> menoh_dtype
   val get_dims_size : h -> string -> int32
   val get_dims_at : h -> string -> int32 -> int32
-  (* val optimize : Model_data.h -> h -> unit *)
 end = struct 
   type t = menoh_variable_profile_table
   type h = menoh_variable_profile_table_handle
@@ -188,7 +187,7 @@ end = struct
   let get_variable_buffer_handle h vname =
     let dst_data = allocate (ptr void) (from_voidp void null) in
     error_check (fun () -> menoh_model_get_variable_buffer_handle h vname dst_data);
-    (!@ dst_data) (* Todo dst_data or !@ dst_data ?*)
+    (!@ dst_data)
   let get_variable_dtype h vname =
     let dst_type = allocate int32_t 0l in
     error_check (fun () -> menoh_model_get_variable_dtype h vname dst_type); (!@ dst_type)
@@ -200,12 +199,5 @@ end = struct
     error_check (fun () -> menoh_model_get_variable_dims_at h vname index dst_size); (!@ dst_size)
   let run h = error_check (fun () -> menoh_model_run h)
 end
-
-(* module Lowlevel = struct 
-  include Ctypes
-  include Types
-  include Bindings
-  let float = float
-end *)
 
 module Ctypes = Ctypes
