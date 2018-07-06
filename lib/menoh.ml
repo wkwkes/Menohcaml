@@ -30,27 +30,7 @@ module Menoh_error = struct
     | Backend_error
     | Same_named_variable_already_exist
     | Others
-
-  let to_string = function
-    | Success -> "Success"
-    | Std_error -> "Std_error"
-    | Unknown_error -> "Unknown_error"
-    | Invalid_filename -> "Invalid_filename"
-    | Unsupported_onnx_opset_version -> "Unsupported_onnx_opset_version"
-    | Onnx_parse_error -> "Onnx_parse_error"
-    | Invalid_dtype -> "Invalid_dtype"
-    | Invalid_attribute_type -> "Invalid_attribute_type"
-    | Unsupported_operator_attribute -> "Unsupported_operator_attribute"
-    | Dimension_mismatch -> "Dimension_mismatch"
-    | Variable_not_found -> "Variable_not_found"
-    | Index_out_of_range -> "Index_out_of_range"
-    | Json_parse_error -> "Json_parse_error"
-    | Invalid_backend_name -> "Invalid_backend_name"
-    | Unsupported_operator -> "Unsupported_operator"
-    | Failed_to_configure_operator -> "Failed_to_configure_operator"
-    | Backend_error -> "Backend_error"
-    | Same_named_variable_already_exist -> "Same_named_variable_already_exist"
-    | Others -> "Others"
+    [@@deriving show]
 
   exception Menoh_error of string
 
@@ -77,7 +57,7 @@ module Menoh_error = struct
 
   let error_check f = match of_int32 (f ()) with
     | Others | Success -> ()
-    | e -> raise @@ Menoh_error (Printf.sprintf "%s : %s" (to_string e) (menoh_get_last_error_message()))
+    | e -> raise @@ Menoh_error (Printf.sprintf "%s : %s" (show e) (menoh_get_last_error_message()))
 end
 
 open Menoh_error

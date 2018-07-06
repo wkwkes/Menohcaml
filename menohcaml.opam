@@ -12,6 +12,7 @@ depends: [
   "ctypes"
   "ctypes-foreign"
   "jbuilder"                {build & >= "1.0+beta18.1"}
+  "ppx_deriving"
 ]
 available: [ ocaml-version >= "4.05.0" ]
 descr: "

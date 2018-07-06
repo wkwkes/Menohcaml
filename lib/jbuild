@@ -19,6 +19,7 @@
   (modules (ffi_generated_types
             ffi_generated
             menoh))
+  (preprocess (pps (ppx_deriving.std)))          
   (c_names (ffi_generated_stubs))
   (flags (:standard -w -9-27-32-34))
   (c_flags ((:standard \ -Werror -pedantic -Wall -Wunused) -w))
