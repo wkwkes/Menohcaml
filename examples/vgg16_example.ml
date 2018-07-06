@@ -5,7 +5,7 @@ let fc6_out_name = "140326200777584"
 let softmax_out_name = "140326200803680"
 
 let model_data = Model_data.make_from_onnx 
-    "/Users/oshi/works/intern/pfn/menohcaml/data/VGG16.onnx"
+    "path/to/VGG16.onnx"
 
 let vpt_builder = Vpt_builder.make ()
 
