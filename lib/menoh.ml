@@ -65,12 +65,10 @@ open Menoh_error
 let get_handle ty_h ty_t = allocate ty_h (from_voidp ty_t null)
 
 module Model_data : sig
-  type t
   type h (* handler *) = menoh_model_data_handle
   val make_from_onnx : string -> h
   val delete : h -> unit
 end = struct
-  type t = menoh_model_data
   type h = menoh_model_data_handle
   let make_from_onnx p =  
     let h = get_handle menoh_model_data_handle menoh_model_data in
@@ -79,7 +77,6 @@ end = struct
 end
 
 module Vpt_builder : sig 
-  type t
   type h = menoh_variable_profile_table_builder_handle
   val make : unit -> h
   val delete : h -> unit
@@ -87,7 +84,6 @@ module Vpt_builder : sig
   val add_input_profile_dims_4 : h -> string -> menoh_dtype -> int32 -> int32 -> int32 -> int32 -> unit
   val add_output_profile : h -> string -> menoh_dtype -> unit
 end = struct 
-  type t = menoh_variable_profile_table_builder
   type h = menoh_variable_profile_table_builder_handle
   let make () = 
     let h = get_handle menoh_variable_profile_table_builder_handle menoh_variable_profile_table_builder in
@@ -102,7 +98,6 @@ end = struct
 end
 
 module Vpt : sig
-  type t
   type h = menoh_variable_profile_table_handle
   val build : Vpt_builder.h -> Model_data.h -> h 
   val delete : h -> unit
@@ -110,7 +105,6 @@ module Vpt : sig
   val get_dims_size : h -> string -> int32
   val get_dims_at : h -> string -> int32 -> int32
 end = struct 
-  type t = menoh_variable_profile_table
   type h = menoh_variable_profile_table_handle
   let build vptb_h md_h = 
     let h = get_handle menoh_variable_profile_table_handle menoh_variable_profile_table in
@@ -131,13 +125,11 @@ let optimize : Model_data.h -> Vpt.h -> unit =
   fun mh vh -> error_check (fun () -> menoh_model_data_optimize mh vh)
 
 module Model_builder : sig 
-  type t
   type h = menoh_model_builder_handle
   val make : Vpt.h -> h
   val delete : h -> unit
   val attach_external_buffer : h -> string -> unit ptr -> unit
 end = struct
-  type t = menoh_model_builder
   type h = menoh_model_builder_handle
   let make vpt_h = 
     let h = get_handle menoh_model_builder_handle menoh_model_builder in
@@ -148,7 +140,6 @@ end = struct
 end
 
 module Model : sig 
-  type t
   type h = menoh_model_handle
   val build : Model_builder.h -> Model_data.h -> string -> string -> h
   val delete : h -> unit
@@ -158,7 +149,6 @@ module Model : sig
   val get_variable_dims_at : h -> string -> int32 -> int32
   val run : h -> unit
 end = struct 
-  type t = menoh_model
   type h = menoh_model_handle
   let build mb_h md_h bname bconf =
     let h = get_handle menoh_model_handle menoh_model in

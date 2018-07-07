@@ -1,5 +1,6 @@
 # Menohcaml
-OCaml binding for [Menoh](https://github.com/pfnet-research/menoh)
+OCaml binding for [Menoh](https://github.com/pfnet-research/menoh).
+Menoh should be installed.
 
 # Example
 

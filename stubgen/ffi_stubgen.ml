@@ -1,8 +1,6 @@
 module Ffi_bindings = Menohcaml_bindings.Ffi_bindings
 
 let prefix = "menoh_stub"
-
-(* let c_header = "#include <menoh/menoh.h>" *)
 let c_header = "#include <menoh/menoh.h>"
 
 let () =

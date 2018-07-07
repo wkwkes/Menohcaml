@@ -32,10 +32,10 @@ module Bindings (F : Ctypes.FOREIGN) = struct
   let menoh_dtype = int32_t
   let menoh_error_code = int32_t
 
+  (* structures and handlers *)
   type _menoh_model_data
   type menoh_model_data = _menoh_model_data structure
   let menoh_model_data : menoh_model_data typ = structure "menoh_model_data"
-
   type menoh_model_data_handle = menoh_model_data ptr
   let menoh_model_data_handle : menoh_model_data_handle typ = ptr menoh_model_data
 
@@ -63,11 +63,11 @@ module Bindings (F : Ctypes.FOREIGN) = struct
   type menoh_model_handle = menoh_model ptr
   let menoh_model_handle : menoh_model_handle typ = ptr menoh_model
 
+  (* APIs *)
   let menoh_get_last_error_message = foreign "menoh_get_last_error_message" (void @-> returning string)
 
   let menoh_make_model_data_from_onnx = 
     foreign "menoh_make_model_data_from_onnx" (string @-> ptr menoh_model_data_handle @-> returning menoh_error_code)
-
 
   let menoh_delete_model_data = 
     foreign "menoh_delete_model_data" (menoh_model_data_handle @-> returning void)
@@ -88,50 +88,66 @@ module Bindings (F : Ctypes.FOREIGN) = struct
     foreign "menoh_variable_profile_table_builder_add_output_profile" (menoh_variable_profile_table_builder_handle @-> string @-> menoh_dtype @-> returning menoh_error_code)
 
   let menoh_build_variable_profile_table =
-    foreign "menoh_build_variable_profile_table" (menoh_variable_profile_table_builder_handle @-> menoh_model_data_handle @-> ptr menoh_variable_profile_table_handle @-> returning menoh_error_code)
+    foreign "menoh_build_variable_profile_table" 
+    (menoh_variable_profile_table_builder_handle @-> menoh_model_data_handle @-> ptr menoh_variable_profile_table_handle @-> returning menoh_error_code)
 
   let menoh_delete_variable_profile_table =
-    foreign "menoh_delete_variable_profile_table" (menoh_variable_profile_table_handle @-> returning void)
+    foreign "menoh_delete_variable_profile_table" 
+    (menoh_variable_profile_table_handle @-> returning void)
 
   let menoh_variable_profile_table_get_dtype =
-    foreign "menoh_variable_profile_table_get_dtype" (menoh_variable_profile_table_handle @-> string @-> ptr menoh_dtype @-> returning menoh_error_code)
+    foreign "menoh_variable_profile_table_get_dtype" 
+    (menoh_variable_profile_table_handle @-> string @-> ptr menoh_dtype @-> returning menoh_error_code)
 
   let menoh_variable_profile_table_get_dims_size =
-    foreign "menoh_variable_profile_table_get_dims_size" (menoh_variable_profile_table_handle @-> string @-> ptr int32_t @-> returning menoh_error_code)
+    foreign "menoh_variable_profile_table_get_dims_size" 
+    (menoh_variable_profile_table_handle @-> string @-> ptr int32_t @-> returning menoh_error_code)
 
   let menoh_variable_profile_table_get_dims_at =
-    foreign "menoh_variable_profile_table_get_dims_at" (menoh_variable_profile_table_handle @-> string @-> int32_t @-> ptr int32_t @-> returning menoh_error_code)
+    foreign "menoh_variable_profile_table_get_dims_at" 
+    (menoh_variable_profile_table_handle @-> string @-> int32_t @-> ptr int32_t @-> returning menoh_error_code)
 
   let menoh_model_data_optimize = 
-    foreign "menoh_model_data_optimize" (menoh_model_data_handle @-> menoh_variable_profile_table_handle @-> returning menoh_error_code)
+    foreign "menoh_model_data_optimize" 
+    (menoh_model_data_handle @-> menoh_variable_profile_table_handle @-> returning menoh_error_code)
 
   let menoh_make_model_builder = 
-    foreign "menoh_make_model_builder" (menoh_variable_profile_table_handle @-> ptr menoh_model_builder_handle @-> returning menoh_error_code)
+    foreign "menoh_make_model_builder" 
+    (menoh_variable_profile_table_handle @-> ptr menoh_model_builder_handle @-> returning menoh_error_code)
 
   let menoh_delete_model_builder =
-    foreign "menoh_delete_model_builder" (menoh_model_builder_handle @-> returning void)
+    foreign "menoh_delete_model_builder" 
+    (menoh_model_builder_handle @-> returning void)
 
   let menoh_model_builder_attach_external_buffer = 
-    foreign "menoh_model_builder_attach_external_buffer" (menoh_model_builder_handle @-> string @-> ptr void @-> returning menoh_error_code)
+    foreign "menoh_model_builder_attach_external_buffer" 
+    (menoh_model_builder_handle @-> string @-> ptr void @-> returning menoh_error_code)
 
   let menoh_build_model = 
-    foreign "menoh_build_model" (menoh_model_builder_handle @-> menoh_model_data_handle @-> string @-> string @-> ptr menoh_model_handle @-> returning menoh_error_code)
+    foreign "menoh_build_model" 
+    (menoh_model_builder_handle @-> menoh_model_data_handle @-> string @-> string @-> ptr menoh_model_handle @-> returning menoh_error_code)
 
   let menoh_delete_model =
-    foreign "menoh_delete_model" (menoh_model_handle @-> returning void)
+    foreign "menoh_delete_model"
+    (menoh_model_handle @-> returning void)
 
   let menoh_model_get_variable_buffer_handle = 
-    foreign "menoh_model_get_variable_buffer_handle" (menoh_model_handle @-> string @-> ptr (ptr void) @-> returning menoh_error_code)
+    foreign "menoh_model_get_variable_buffer_handle" 
+    (menoh_model_handle @-> string @-> ptr (ptr void) @-> returning menoh_error_code)
 
   let menoh_model_get_variable_dtype =
-    foreign "menoh_model_get_variable_dtype" (menoh_model_handle @-> string @-> ptr menoh_dtype @-> returning menoh_error_code)
+    foreign "menoh_model_get_variable_dtype" 
+    (menoh_model_handle @-> string @-> ptr menoh_dtype @-> returning menoh_error_code)
 
   let menoh_model_get_variable_dims_size =
-    foreign "menoh_model_get_variable_dims_size" (menoh_model_handle @-> string @-> ptr int32_t @-> returning menoh_error_code)
+    foreign "menoh_model_get_variable_dims_size" 
+    (menoh_model_handle @-> string @-> ptr int32_t @-> returning menoh_error_code)
 
   let menoh_model_get_variable_dims_at =
-    foreign "menoh_model_get_variable_dims_at" (menoh_model_handle @-> string @-> int32_t @-> ptr int32_t @-> returning menoh_error_code)
+    foreign "menoh_model_get_variable_dims_at" 
+    (menoh_model_handle @-> string @-> int32_t @-> ptr int32_t @-> returning menoh_error_code)
 
   let menoh_model_run = 
-    foreign "menoh_model_run" (menoh_model_handle @-> returning menoh_error_code)
+    foreign "menoh_model_run" 
+    (menoh_model_handle @-> returning menoh_error_code)
 end
