@@ -33,8 +33,6 @@ let () = Model_builder.attach_external_buffer model_builder conv1_1_in_name Ctyp
 
 let model = Model.build model_builder model_data "mkldnn" "" 
 
-let () = Model_data.delete model_data
-
 let fc6_output_buff = Model.get_variable_buffer_handle model fc6_out_name |> Ctypes.(from_voidp float)
 
 let softmax_output_buff = Model.get_variable_buffer_handle model softmax_out_name |> Ctypes.(from_voidp float)
@@ -63,7 +61,3 @@ let () =
     done;
     print_newline()
   done
-
-let () = Model.delete(model)
-let () = Model_builder.delete(model_builder)
-let () = Vpt_builder.delete(vpt_builder)
