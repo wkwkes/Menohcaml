@@ -1,9 +1,9 @@
 
 (library
- ((name menohcaml_bindings)
+ (name menohcaml_bindings)
   (public_name menohcaml.bindings)
   (c_flags ((:standard \ -Werror -pedantic -Wall -Wunused)))
   (c_library_flags (:standard))
-  (libraries (ctypes.stubs ctypes ctypes.foreign))
- ))
+  (libraries ctypes.stubs ctypes ctypes.foreign)
+ )
 

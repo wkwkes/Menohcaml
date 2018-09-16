@@ -1,0 +1,22 @@
+(executables
+ (names ffi_stubgen ffi_types_stubgen)
+  (libraries menohcaml_bindings
+              ctypes.stubs
+              ctypes.foreign
+              ctypes)
+  )
+
+(rule
+ (targets ffi_ml_types_stubgen.c)
+  (deps   ./ffi_types_stubgen.exe)
+  (action (with-stdout-to %{targets} (run %{deps}))))
+
+(rule
+ (targets ffi_ml_types_stubgen.exe)
+  (deps   ./ffi_ml_types_stubgen.c)
+  (action (bash "%{cc} %{deps} \
+  -I `dirname %{lib:ctypes:ctypes_cstubs_internals.h}` \
+  -I %{ocaml_where} -o %{targets}")
+   ))
+
+; /Users/oshi/.opam/4.05.0/lib/ctypes/ctypes_cstubs_internals.h` \

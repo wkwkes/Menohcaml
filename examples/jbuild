@@ -1,5 +1,0 @@
-(executable
- ((name vgg16_example)
-  (link_flags (-linkall))
-  (libraries (menohcaml))))
-

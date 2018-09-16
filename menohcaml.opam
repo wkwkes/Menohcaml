@@ -8,12 +8,12 @@ bug-reports: "https://github.com/wkwkes/Menohcaml/issues"
 dev-repo: "git+https://github.com/wkwkes/Menohcaml.git"
 license: "MIT"
 build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
   "ctypes"
   "ctypes-foreign"
-  "jbuilder"                {build & >= "1.0+beta18.1"}
+  "dune"                {build & >= "1.0+beta18.1"}
   "ppx_deriving"
 ]
 available: [ ocaml-version >= "4.05.0" ]
